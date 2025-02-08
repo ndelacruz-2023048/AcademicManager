@@ -11,5 +11,9 @@
     "school"
   ],
   "author": "Nery de la Cruz (ND)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.10.0"
+  }
 }
