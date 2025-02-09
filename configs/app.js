@@ -3,6 +3,8 @@ import cors from 'cors'
 import morgan from "morgan"
 import helmet from "helmet"
 
+import routesPerson from '../src/person/person.routes.js'
+
 const config =(app)=>{
     app.use(express.json())
     app.use(express.urlencoded({extended:false}))
@@ -12,7 +14,7 @@ const config =(app)=>{
 }
 
 const routes= (app)=>{
-    
+    app.use(routesPerson)
 }
 
 export const initServer=()=>{
