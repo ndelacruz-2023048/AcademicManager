@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator"
 
-export const validateErrorsPerson = (request,response,next)=>{
+export const validateErrors = (request,response,next)=>{
     const errors = validationResult(request)
     if(!errors.isEmpty()){
         return response.status(400).send({
@@ -11,3 +11,4 @@ export const validateErrorsPerson = (request,response,next)=>{
 }
     next()
 }
+

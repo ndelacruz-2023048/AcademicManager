@@ -32,6 +32,7 @@ const personSchema = Schema({
     },
     role:{
         type:String,
+        required:[false,'Role is not required'],
         enum:['STUDENT_ROLE','TEACHER_ROLE','ADMIN_ROLE'],
     }
 })
