@@ -29,6 +29,10 @@ const studentSchema = Schema({
         type: String,
         required: [true, 'Address is required'],
     },
+    asignatures:[{
+        type:Schema.Types.ObjectId,
+        ref:'Asignature',
+    }],
     countAsignatures:{
         type: Number,
         default: 0

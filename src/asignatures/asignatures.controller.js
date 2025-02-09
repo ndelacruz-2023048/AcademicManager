@@ -4,28 +4,43 @@ import Student from '../students/students.model.js'
 import Teacher from '../teacher/teacher.model.js'
 import mongoose, { Types } from 'mongoose'
 
-const updateCountAsignature = async (asignature) => {
+const updateCountAsignature = async (asignature, { _id },id_asignature) => {
+    console.log(_id)
+    console.log(id_asignature)
     let newCountAsignature = await Student.findOne({ _id: asignature.students })
-    newCountAsignature.countAsignatures +=1
+    newCountAsignature.countAsignatures += 1
+    newCountAsignature.asignatures.push(_id)
     await Student.findByIdAndUpdate({ _id: asignature.students }, newCountAsignature, { new: true })
-    console.log(newCountAsignature)
 }
 
 export const createAsignature = async (request, response) => {
     try {
         let asignature = request.body
         let newAsignature = new Asignature(asignature)
-        let isStudentValid = await Student.findOne({ _id: asignature.students, role: 'STUDENT_ROLE' })
-        let isTeacherValid = await Teacher.findOne({ _id: asignature.teacher, role: 'TEACHER_ROLE' })
+        if (asignature.students) {
+            let isStudentValid = await Student.findOne({ _id: asignature.students, role: 'STUDENT_ROLE' })
+            let isTeacherValid = await Teacher.findOne({ _id: asignature.teacher, role: 'TEACHER_ROLE' })
+            if (!isStudentValid || !isTeacherValid) {
+                return response.status(404).send({ message: 'Student or teacher Id is not valid' })
+            }
+            //Verificamos si el estudiante ya tiene 3 asignaturas
+            if (await Student.findOne({ _id: asignature.students, countAsignatures: 3 })) {
+                return response.status(400).send({ message: 'Student already has 3 asignatures' })
+            }
 
-        if (!isStudentValid || !isTeacherValid) {
-            return response.status(404).send({ message: 'Student or teacher Id is not valid' })
+            await updateCountAsignature(asignature, newAsignature)
+
+            newAsignature.save()
+            response.status(200).send({ message: 'This is the asignatures', newAsignature })
+
+        } else {
+            newAsignature.save()
+            response.status(200).send({ message: 'This is the asignatures', newAsignature })
         }
+        // await updateCountAsignature(asignature)
 
-        await updateCountAsignature(asignature)
-
-        newAsignature.save()
-        response.send({ message: 'This is the asignatures', newAsignature })
+        // newAsignature.save()
+        // response.send({ message: 'This is the asignatures', newAsignature })
     } catch (error) {
         console.error('Error getting asignatures', error)
     }
@@ -52,16 +67,17 @@ export const addStudentAsignature = async (request, response) => {
     try {
         let newStudent = request.body
         let { id_asignature } = request.params//Id de la asignatura
-        
-        let asignature = await Asignature.findOne({ _id: id_asignature })
-        console.log(asignature)
-        
 
-        if(!await Student.findOne({ _id: newStudent.students , role: 'STUDENT_ROLE' })){
+        let asignature = await Asignature.findOne({ _id: id_asignature })
+        if (!asignature) {
             return response.status(404).send({ message: 'Asignature Id not found' })
         }
-        
-        if(await Student.findOne({ _id: newStudent.students , countAsignatures: 3 })){
+
+        if (!await Student.findOne({ _id: newStudent.students, role: 'STUDENT_ROLE' })) {
+            return response.status(404).send({ message: 'Student Id not found' })
+        }
+
+        if (await Student.findOne({ _id: newStudent.students, countAsignatures: 3 })) {
             return response.status(400).send({ message: 'Student already has 3 asignatures' })
         }
 
@@ -73,16 +89,25 @@ export const addStudentAsignature = async (request, response) => {
             }
         }
 
-        await updateCountAsignature(newStudent)
+        await updateCountAsignature(newStudent, asignature)
 
 
-        //Agregamos al estudiante a la asignatura
+
+        //Agregamos el estudiante a la asignatura
         asignature.students.push(newStudent.students)
         asignature.save()
-        console.log(asignature)
 
         response.status(200).send({ message: 'This is the asignatures', newStudent, id_asignature })
     } catch (error) {
         console.error('Error getting asignatures', error)
+    }
+}
+
+export const deleteStudentFromAsignature = async (request, response) => {
+    try {
+
+    } catch (error) {
+        console.error('Error getting asignatures', error)
+
     }
 }

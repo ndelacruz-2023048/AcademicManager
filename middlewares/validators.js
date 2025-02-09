@@ -60,8 +60,8 @@ export const registerAsignature = [
 
 
     //Student---
-    body('students','Student cannot be empty')
-        .custom((student)=>isStudentEmpty(student)),
+    // body('students','Student cannot be empty')
+    //     .custom((student)=>isStudentEmpty(student)),
 
     validateErrors
 ]
