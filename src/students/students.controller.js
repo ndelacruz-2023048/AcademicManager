@@ -31,3 +31,19 @@ export const createStudent = async (request, response) => {
         return response.status(500).send('Error creating student')
     }
 }
+
+export const updateStudent = async (request, response) => {
+    try {
+        let newStudent = request.body
+        let { id_student } = request.params
+        let isStudentValid = await Student.findOne({ _id: id_student })
+        if(!isStudentValid){
+            return response.status(404).send({sucess:false, message: 'Student Id is not valid' })
+        }
+        let student = await Student.findByIdAndUpdate({ _id: id_student }, newStudent, { new: true })
+        response.status(200).send({ success: true, message: 'Student updated', student })
+    } catch (error) {
+        console.error('Error updating student', error);
+        return response.status(500).send('Error updating student',error)
+    }
+}
