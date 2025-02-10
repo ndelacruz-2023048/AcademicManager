@@ -88,6 +88,15 @@ export const updateAsignature = async (request, response) => {
     try {
         let newAsignature = request.body
         let { id_asignature } = request.params//Id de la asignatura
+        let isAsignatureValid = await Asignature.findOne({ _id: id_asignature })
+        if(!isAsignatureValid){
+            return response.status(404).send({sucess:false, message: 'Asignature Id is not valid' })
+        }
+        let credentialsTeacher = await Asignature.findOne({ _id: id_asignature })
+        if(credentialsTeacher.teacher.toString()!==request.user.uid){
+            return response.status(400).send({ message: 'You can only update your account' })
+        }
+
         let asignature = await Asignature.findByIdAndUpdate({ _id: id_asignature }, newAsignature, { new: true })
 
         // let data = new mongoose.Types.ObjectId('67a83d34a538c131d61767b0')
@@ -105,7 +114,7 @@ export const addStudentAsignature = async (request, response) => {
     try {
         let newStudent = request.body
         let { id_asignature } = request.params//Id de la asignatura
-
+        
         let asignature = await Asignature.findOne({ _id: id_asignature })
         if (!asignature) {
             return response.status(404).send({ message: 'Asignature Id not found' })
@@ -114,7 +123,9 @@ export const addStudentAsignature = async (request, response) => {
         if (!await Student.findOne({ _id: newStudent.students, role: 'STUDENT_ROLE' })) {
             return response.status(404).send({ message: 'Student Id not found' })
         }
-
+        if(newStudent.students!==request.user.uid){
+            return response.status(400).send({ message: 'You can only update your account   ' })
+        }
         if (await Student.findOne({ _id: newStudent.students, countAsignatures: 3 })) {
             return response.status(400).send({ message: 'Student already has 3 asignatures' })
         }
@@ -153,6 +164,11 @@ export const deleteStudentFromAsignature = async (request, response) => {
         if(!studentFinded){
             return response.status(404).send({sucess:false, message: 'Student Id not found' })
         }
+        let credentialsTeacher = await Asignature.findOne({ _id: id_asignature })
+        if(credentialsTeacher.teacher.toString()!==request.user.uid){
+            return response.status(400).send({ message: 'You can only update your account   ' })
+        }
+
         let isStudentContain = await Asignature.findOne({_id:id_asignature, students: id_student });
         if(!isStudentContain){
             return response.status(404).send({sucess:false, message: 'Student is not in this asignature' })

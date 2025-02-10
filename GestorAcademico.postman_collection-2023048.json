@@ -1,0 +1,486 @@
+{
+	"info": {
+		"_postman_id": "719a5b88-24f4-4e83-a9f1-ba7882044720",
+		"name": "GestorAcademico",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37956955"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "ormar@kinal.edu.gt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "45fd@Afd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:2640/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Asignatures",
+			"item": [
+				{
+					"name": "CreateAsignature",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2E5NTA0NmFiNTk4YmU3NjUxMTE3ODMiLCJuYW1lIjoiT21hciIsImxhc3ROYW1lIjoiUGF6Iiwicm9sZSI6IlRFQUNIRVJfUk9MRSIsImlhdCI6MTczOTE2NDYyMiwiZXhwIjoxNzM5MTc1NDIyfQ.vp0OIiCN3p5xojHYmtFiqPhL7sF5xGrzQxGxtRw2A8E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "asignatureName",
+									"value": "Ingles3",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Que el alumno pueda tener un mejor razonamiento y logica al momento de tomar decisiones",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Idiomas",
+									"type": "text"
+								},
+								{
+									"key": "teacher",
+									"value": "67a95046ab598be765111783",
+									"type": "text"
+								},
+								{
+									"key": "students",
+									"value": "67a94148caf0f125c3d91ee3",
+									"type": "text"
+								},
+								{
+									"key": "teacher",
+									"value": "67a7fbbc388c05f092bd752b",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:2640/asignatures",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"asignatures"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBasicAsignature",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2E5NTA0NmFiNTk4YmU3NjUxMTE3ODMiLCJuYW1lIjoiT21hciIsImxhc3ROYW1lIjoiUGF6Iiwicm9sZSI6IlRFQUNIRVJfUk9MRSIsImlhdCI6MTczOTE2NDYyMiwiZXhwIjoxNzM5MTc1NDIyfQ.vp0OIiCN3p5xojHYmtFiqPhL7sF5xGrzQxGxtRw2A8E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "asignatureName",
+									"value": "PsicologiaII",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Poder ver a la sociedad de una manera distinta con el finde de poder ser de ayuda",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "Ciencias Sociales",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:2640/editAsignature/67a98f643a8157d9335f4d27",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"editAsignature",
+								"67a98f643a8157d9335f4d27"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddStudentToAsignature",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2E5NTA0NmFiNTk4YmU3NjUxMTE3ODMiLCJuYW1lIjoiT21hciIsImxhc3ROYW1lIjoiUGF6Iiwicm9sZSI6IlRFQUNIRVJfUk9MRSIsImlhdCI6MTczOTE2NDYyMiwiZXhwIjoxNzM5MTc1NDIyfQ.vp0OIiCN3p5xojHYmtFiqPhL7sF5xGrzQxGxtRw2A8E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "students",
+									"value": "67a98c0fc92b9dd0766dd0b1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:2640/addStudentAsignature/67a94180caf0f125c3d91ee9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"addStudentAsignature",
+								"67a94180caf0f125c3d91ee9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteStudentFromAsignature",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2E5NTA0NmFiNTk4YmU3NjUxMTE3ODMiLCJuYW1lIjoiT21hciIsImxhc3ROYW1lIjoiUGF6Iiwicm9sZSI6IlRFQUNIRVJfUk9MRSIsImlhdCI6MTczOTE2NDYyMiwiZXhwIjoxNzM5MTc1NDIyfQ.vp0OIiCN3p5xojHYmtFiqPhL7sF5xGrzQxGxtRw2A8E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_student",
+									"value": "67a94148caf0f125c3d91ee3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:2640/deleteAsignature/67a941dccaf0f125c3d91efb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"deleteAsignature",
+								"67a941dccaf0f125c3d91efb"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "NewStudent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "Wilson",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Arocha",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "wilson@kinal.edu.gt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "dfd6A@dfdf",
+									"type": "text"
+								},
+								{
+									"key": "career",
+									"value": "Perito en Mecanica",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "45962315",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "4ta Av. Zona 1 Colonia Rosales",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "STUDENT_ROLE",
+									"type": "text"
+								},
+								{
+									"key": "asignatureId",
+									"value": "67a909210be5566fe1e62513",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:2640/student",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"student"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AsignaturesByStudent",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2640/getAsignaturesByStudent/67a94137caf0f125c3d91ee0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"getAsignaturesByStudent",
+								"67a94137caf0f125c3d91ee0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateStudent",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "Maria",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Velazquez",
+									"type": "text"
+								},
+								{
+									"key": "career",
+									"value": "Perito en Dibujo Tecnico",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "45459090",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "520 zona 12 colonia rafael postal 501",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:2640/updateStudent/67a94148caf0f125c3d91ee3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"updateStudent",
+								"67a94148caf0f125c3d91ee3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "NewTeacher",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "Omar",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Paz",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ormar@kinal.edu.gt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "45fd@Afd",
+									"type": "text"
+								},
+								{
+									"key": "specialization",
+									"value": "PEM. Matematicas y Fisica",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "6500.00",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "5ta Samayoa",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "45632598",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "TEACHER_ROLE",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:2640/teacher",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"teacher"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AsignaturesByTeacher",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2640/getAsignaturesByTeacher/67a83aa39b17194f0ddf8522",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2640",
+							"path": [
+								"getAsignaturesByTeacher",
+								"67a83aa39b17194f0ddf8522"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
