@@ -4,13 +4,51 @@ import Student from '../students/students.model.js'
 import Teacher from '../teacher/teacher.model.js'
 import mongoose, { Types } from 'mongoose'
 
-const updateCountAsignature = async (asignature, { _id },id_asignature) => {
-    console.log(_id)
-    console.log(id_asignature)
+const updateCountAsignature = async (asignature, { _id }) => {
     let newCountAsignature = await Student.findOne({ _id: asignature.students })
     newCountAsignature.countAsignatures += 1
     newCountAsignature.asignatures.push(_id)
     await Student.findByIdAndUpdate({ _id: asignature.students }, newCountAsignature, { new: true })
+}
+
+export const getAsignaturesByStudent = async (request, response) => { 
+    try {
+        let { id_student } = request.params//Id de la asignatura
+        let studentFinded = await Student.findOne({ _id: id_student })
+        if(!studentFinded){
+            return response.status(404).send({sucess:false, message: 'Student Id not found' })
+        }
+        let asignaturedFinded;
+        let asignaturedFindedArray=[]
+        for(let listAsignature of studentFinded.asignatures){
+            asignaturedFinded = await Asignature.findOne({ _id: listAsignature })
+            if(!asignaturedFinded){
+                return response.status(404).send({sucess:false, message: 'Asignature Id not found' })
+            }
+            asignaturedFindedArray.push(asignaturedFinded)
+        }
+        // let isStudentContain = await Asignature.findOne({_id:id_asignature, students: id_student });
+        response.send({sucess:true, message: 'This is the asignatures that you are asigned', asignaturedFindedArray })
+    } catch (error) {
+        response.status(500).send({sucess:false, message: 'General server error', error})
+    }
+}
+
+export const getAsignaturesByTeacher = async (request, response) => {
+    try {
+        let { id_teacher } = request.params//Id de la asignatura
+        let teacherFinded = await Teacher.findOne({ _id: id_teacher })
+        if(!teacherFinded){
+            return response.status(404).send({sucess:false, message: 'Teacher Id not found' })
+        }
+        let asignaturedFinded = await Asignature.find({teacher: id_teacher})
+        if(asignaturedFinded.length===0){
+            return response.status(404).send({sucess:false, message: 'This teacher is not teaching any asignature' })
+        }
+        response.send({sucess:true, message: 'This is the asignatures that you are teaching', asignaturedFinded })  
+    } catch (error) {
+        response.status(500).send({sucess:false, message: 'General server error', error})
+    }
 }
 
 export const createAsignature = async (request, response) => {
@@ -85,7 +123,7 @@ export const addStudentAsignature = async (request, response) => {
         let data = new mongoose.Types.ObjectId(`${newStudent.students}`)
         for (let lista of asignature.students) {
             if (lista.equals(data)) {
-                return response.status(400).send({ message: 'Student already in the asignature' })
+                return response.status(400).send({ message: 'Student already in this asignature' })
             }
         }
 
@@ -97,7 +135,7 @@ export const addStudentAsignature = async (request, response) => {
         asignature.students.push(newStudent.students)
         asignature.save()
 
-        response.status(200).send({ message: 'This is the asignatures', newStudent, id_asignature })
+        response.status(200).send({ message: 'Student is added to the signature ', newStudent, id_asignature })
     } catch (error) {
         console.error('Error getting asignatures', error)
     }
@@ -105,9 +143,35 @@ export const addStudentAsignature = async (request, response) => {
 
 export const deleteStudentFromAsignature = async (request, response) => {
     try {
+        let { id_asignature } = request.params//Id de la asignatura
+        let {id_student} = request.body 
+        let asignaturedFinded = await Asignature.findOne({ _id: id_asignature })
+        let studentFinded = await Student.findOne({ _id: id_student })
+        if(!asignaturedFinded){
+            return response.status(404).send({sucess:false, message: 'Asignature Id not found' })
+        }
+        if(!studentFinded){
+            return response.status(404).send({sucess:false, message: 'Student Id not found' })
+        }
+        let isStudentContain = await Asignature.findOne({_id:id_asignature, students: id_student });
+        if(!isStudentContain){
+            return response.status(404).send({sucess:false, message: 'Student is not in this asignature' })
+        }
 
+        if(asignaturedFinded.students.length===0){
+            return response.status(404).send({sucess:false, message: 'There are no students in this asignature' })
+        }
+
+        let data = await Asignature.findByIdAndUpdate(id_asignature, {$pull: { students: id_student }},
+        { new: true });
+        let {countAsignatures} = await Student.findOne({_id: id_student})
+        let data3 = await Student.findByIdAndUpdate(id_student, {$pull: { asignatures: id_asignature },countAsignatures:countAsignatures-1},
+        { new: true });
+
+
+        response.send({sucess:true, message: 'Student deleted from the asignatured succesfully!!!' })
     } catch (error) {
         console.error('Error getting asignatures', error)
 
-    }
+    }   
 }
