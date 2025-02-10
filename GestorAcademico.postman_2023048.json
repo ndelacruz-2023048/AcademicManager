@@ -19,12 +19,12 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "ormar@kinal.edu.gt",
+									"value": "wilson@kinal.edu.gt",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "45fd@Afd",
+									"value": "dfd6A@dfdf",
 									"type": "text"
 								}
 							]
@@ -340,7 +340,13 @@
 					"name": "UpdateStudent",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2N2E5OGMwZmM5MmI5ZGQwNzY2ZGQwYjEiLCJuYW1lIjoiV2lsc29uIiwibGFzdE5hbWUiOiJBcm9jaGEiLCJyb2xlIjoiU1RVREVOVF9ST0xFIiwiaWF0IjoxNzM5MTY2ODkzLCJleHAiOjE3MzkxNzc2OTN9.GzqyeI21MTWZaIRuw3fUHKckPtIT0xvvQE7b6X4FgJk",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
@@ -372,7 +378,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:2640/updateStudent/67a94148caf0f125c3d91ee3",
+							"raw": "http://localhost:2640/updateStudent/67a98c0fc92b9dd0766dd0b1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -380,7 +386,7 @@
 							"port": "2640",
 							"path": [
 								"updateStudent",
-								"67a94148caf0f125c3d91ee3"
+								"67a98c0fc92b9dd0766dd0b1"
 							]
 						}
 					},

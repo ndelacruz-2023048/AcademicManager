@@ -40,6 +40,9 @@ export const updateStudent = async (request, response) => {
         if(!isStudentValid){
             return response.status(404).send({sucess:false, message: 'Student Id is not valid' })
         }
+        if(id_student!==request.user.uid){
+            return response.status(400).send({ message: 'You can only update your account' })
+        }
         let student = await Student.findByIdAndUpdate({ _id: id_student }, newStudent, { new: true })
         response.status(200).send({ success: true, message: 'Student updated', student })
     } catch (error) {
